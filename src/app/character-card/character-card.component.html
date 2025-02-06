@@ -1,0 +1,11 @@
+<div class="card">
+    <h2>{{ character.name }}</h2>
+    <p><strong>Role:</strong> {{ character.role }}</p>
+    <p><strong>Street Cred:</strong> {{ character.streetCred }}</p>
+    <p><strong>Skills:</strong></p>
+    <ul>
+      <li *foOfr="let skill of character.skills">{{ skill }}</li>
+    </ul>
+    <button (click)="displayDetails()">Show Details</button>
+  </div>
+  

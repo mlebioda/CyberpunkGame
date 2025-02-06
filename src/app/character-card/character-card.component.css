@@ -1,0 +1,32 @@
+.card {
+    border: 2px solid #333;
+    padding: 20px;
+    background-color: #f4f4f4;
+    border-radius: 10px;
+    width: 300px;
+    margin: 20px;
+  }
+  
+  h2 {
+    text-align: center;
+    color: #333;
+  }
+  
+  ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  button {
+    background-color: #3498db;
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+  
+  button:hover {
+    background-color: #2980b9;
+  }
+  

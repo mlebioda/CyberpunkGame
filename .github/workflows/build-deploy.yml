@@ -1,0 +1,53 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main  # Runs when there is a push to the main branch (you can use other branches)
+
+jobs:
+  build:
+    runs-on: ubuntu-latest  # This means the build will happen on a GitHub server with Ubuntu
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3  # Checks out your repository so GitHub Actions can access the code
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'  # Use Node.js version 18 for your project
+
+      - name: Install dependencies
+        run: npm install  # Install all project dependencies
+
+      - name: Build Angular app
+        run: npm run build --prod  # Build the Angular app in production mode
+
+      - name: Build Docker image
+        run: docker build -t my-angular-app .  # Build the Docker image for your app
+
+      - name: Save Docker image as a tar file
+        run: docker save -o my-angular-app.tar my-angular-app  # Save the Docker image as a tar file
+
+      - name: Upload Docker image artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: my-angular-app  # Name of the artifact
+          path: my-angular-app.tar  # Path to the tar file to upload
+          
+  deploy:
+    runs-on: ubuntu-latest  # Runs on an Ubuntu GitHub server
+    needs: build  # This job will run after the build job finishes
+
+    steps:
+      - name: Download Docker image artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: my-angular-app  # This is the artifact name used above
+          path: .  # Where to store the downloaded file
+
+      - name: Transfer Docker image to Raspberry Pi
+        run: |
+          scp -o StrictHostKeyChecking=no my-angular-app.tar admin@192.168.0.215:~/my-angular-app.tar  # Secure copy to Raspberry Pi
+          ssh admin@192.168.0.215 "docker load -i ~/my-angular-app.tar && docker run -d --name angular-app -p 80:80 my-angular-app"  # Load Docker image and run it

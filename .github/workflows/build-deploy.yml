@@ -31,7 +31,7 @@ jobs:
         run: docker save -o my-angular-app.tar my-angular-app  # Save the Docker image as a tar file
 
       - name: Upload Docker image artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: my-angular-app  # Name of the artifact
           path: my-angular-app.tar  # Path to the tar file to upload

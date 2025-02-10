@@ -19,7 +19,7 @@ RUN npm run build --prod
 # Use NGINX to serve the Angular app
 FROM nginx:alpine
 
-# Copy the built Angular app to the NGINX web directory
+# Copy the built Angular app to the NGINX web directoryd
 COPY --from=0 /app/dist/ /usr/share/nginx/html
 
 # Expose the port the app will run on

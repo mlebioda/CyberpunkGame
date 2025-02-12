@@ -4,6 +4,10 @@ FROM arm64v8/node:23-alpine
 # Set the working directory inside the container
 WORKDIR /app
 
+Check if the directory exists
+RUN ls -l /  
+# This should list the contents of the root directory, including /app
+
 # Copy package.json and package-lock.json (or yarn.lock)
 COPY package*.json ./
 
@@ -14,7 +18,7 @@ RUN npm install
 COPY . .
 
 # Build the Angular application (production build)
-RUN npm run build -- --prod
+RUN npm run build --dist
 
 # Use NGINX to serve the Angular app (ARM architecture version)
 FROM arm64v8/nginx:alpine

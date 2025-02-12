@@ -14,13 +14,13 @@ RUN npm install
 COPY . .
 
 # Build the Angular application (production build)
-RUN npm run build --dist
+RUN npm run build -- --prod
 
 # Use NGINX to serve the Angular app (ARM architecture version)
 FROM arm64v8/nginx:alpine
 
 # Copy the built Angular app to the NGINX web directory
-COPY --from=0 /app/dist/ /usr/share/nginx/html
+COPY --from=0 /app/dist/CyberpunkGame/ /usr/share/nginx/html
 
 # Expose the port the app will run on
 EXPOSE 80

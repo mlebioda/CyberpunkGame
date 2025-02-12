@@ -1,11 +1,9 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { CharacterCardComponent } from "./character-card/character-card.component";
-import { SelectClassComponent } from "./select-class/select-class.component";
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, CharacterCardComponent, SelectClassComponent],
+  imports: [RouterOutlet],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

@@ -4,7 +4,7 @@ FROM arm64v8/node:23-alpine
 # Set the working directory inside the container
 WORKDIR /app
 
-Check if the directory exists
+#Check if the directory exists
 RUN ls -l /  
 # This should list the contents of the root directory, including /app
 

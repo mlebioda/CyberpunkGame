@@ -4,10 +4,10 @@ FROM arm64v8/node:23-alpine
 # Set the working directory inside the container
 WORKDIR /app
 
-RUN uname -m
-
 # Copy package.json and package-lock.json (or yarn.lock)
 COPY package*.json ./
+
+RUN uname
 
 # Install dependencies
 RUN npm install

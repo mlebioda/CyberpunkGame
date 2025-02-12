@@ -1,5 +1,5 @@
 # Use an official Node.js runtime as a parent image
-FROM node:23-alpine
+FROM arm64v8/node:23-alpine
 
 # Set the working directory inside the container
 WORKDIR /app
@@ -16,10 +16,10 @@ COPY . .
 # Build the Angular application (production build)
 RUN npm run build --dist
 
-# Use NGINX to serve the Angular app
-FROM nginx:alpine
+# Use NGINX to serve the Angular app (ARM architecture version)
+FROM arm64v8/nginx:alpine
 
-# Copy the built Angular app to the NGINX web directoryd
+# Copy the built Angular app to the NGINX web directory
 COPY --from=0 /app/dist/ /usr/share/nginx/html
 
 # Expose the port the app will run on

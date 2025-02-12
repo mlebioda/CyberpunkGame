@@ -13,12 +13,12 @@ COPY package*.json ./
 # Install dependencies
 RUN npm install
 
-npm run build --dist
+RUN ls -l /
 
 # Copy the rest of the application code
 COPY . .
 
-npm run build --dist
+RUN ls -l /
 
 # Build the Angular application (production build)
 RUN npm run build --dist

@@ -3,51 +3,52 @@ name: CI/CD Pipeline
 on:
   push:
     branches:
-      - main  # Runs when there is a push to the main branch (you can use other branches)
+      - dev  # Run workflow when pushing to 'dev'
 
 jobs:
   build:
-    runs-on: ubuntu-latest  # This means the build will happen on a GitHub server with Ubuntu
-
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3  # Checks out your repository so GitHub Actions can access the code
+        uses: actions/checkout@v4
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18'  # Use Node.js version 18 for your project
+      - name: Log in to Docker Hub
+        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
 
-      - name: Install dependencies
-        run: npm install  # Install all project dependencies
+      - name: Build Docker Image
+        run: docker build -t CyberpunkGame .
 
-      - name: Build Angular app
-        run: npm run build --prod  # Build the Angular app in production mode
+ # sonarcloud:
+ #   needs: build  # Run SonarCloud only if the build job succeeds
+ #   runs-on: ubuntu-latest
+ #   steps:
+ #     - name: Checkout repository
+ #       uses: actions/checkout@v4
 
-      - name: Build Docker image
-        run: docker build -t my-angular-app .  # Build the Docker image for your app
+#      - name: Run SonarCloud Scan in Docker
+#        run: |
+#          docker run --rm \
+#            -e SONAR_TOKEN=${{ secrets.SONAR_TOKEN }} \
+#            sonarsource/sonar-scanner-cli \
+#            -Dsonar.projectKey=my_project_key \
+#            -Dsonar.organization=my_organization \
+#            -Dsonar.sources=. \
+#            -Dsonar.host.url=https://sonarcloud.io \
+#            -Dsonar.language=cpp \
+#            -Dsonar.sourceEncoding=UTF-8
 
-      - name: Save Docker image as a tar file
-        run: docker save -o my-angular-app.tar my-angular-app  # Save the Docker image as a tar file
+#  push_to_main:
+#    needs: sonarcloud
+#    runs-on: ubuntu-latest
+#    if: success()
+#    steps:
+#      - name: Checkout repository
+#        uses: actions/checkout@v4
 
-      - name: Upload Docker image artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: my-angular-app  # Name of the artifact
-          path: my-angular-app.tar  # Path to the tar file to upload
-          
-  deploy:
-    runs-on: ubuntu-latest  # Runs on an Ubuntu GitHub server
-    needs: build  # This job will run after the build job finishes
-
-    steps:
-      - name: Download Docker image artifact
-        uses: actions/download-artifact@v3
-        with:
-          name: my-angular-app  # This is the artifact name used above
-          path: .  # Where to store the downloaded file
-
-      - name: Transfer Docker image to Raspberry Pi
-        run: |
-          scp -o StrictHostKeyChecking=no my-angular-app.tar admin@192.168.0.215:~/my-angular-app.tar  # Secure copy to Raspberry Pi
-          ssh admin@192.168.0.215 "docker load -i ~/my-angular-app.tar && docker run -d --name angular-app -p 80:80 my-angular-app"  # Load Docker image and run it
+#      - name: Merge dev into main
+#        run: |
+#          git config --global user.name "GitHub Actions"
+#          git config --global user.email "actions@github.com"
+#          git checkout main
+#          git merge --no-ff dev -m "Auto-merge from dev to main"
+#          git push origin main

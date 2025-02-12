@@ -24,7 +24,7 @@ jobs:
           echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
 
       - name: Build Docker Image
-        run: docker build -t cyberpunkGame .
+        run: docker build -t cyberpunkgame .
 
  # sonarcloud:
  #   needs: build  # Run SonarCloud only if the build job succeeds

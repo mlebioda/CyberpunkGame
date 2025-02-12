@@ -3,7 +3,7 @@ name: CI/CD Pipeline
 on:
   push:
     branches:
-      - dev  # Run workflow when pushing to 'dev'
+      - main  # Run workflow when pushing to 'dev'
 
 jobs:
   build:

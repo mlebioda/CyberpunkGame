@@ -2,15 +2,14 @@
 FROM arm64v8/node:23-alpine
 
 # Set the working directory inside the container
-#WORKDIR /app
-WORKDIR /usr/local/app
+WORKDIR /app
 
 #Check if the directory exists
 #RUN ls -l /
 
 # Copy package.json and package-lock.json (or yarn.lock)
 #COPY package*.json ./
-COPY ./ /usr/local/app/
+COPY ./ /app/
 
 # Install dependencies
 RUN npm install
@@ -18,25 +17,20 @@ RUN npm install
 # Generate the build of the application
 #RUN npm run build
 
-#RUN ls -l /
 
 # Copy the rest of the application code
 #COPY . .
 
-#RUN ls -l /
-
 # Build the Angular application (production build)
 RUN npm run build --dist
 
-#Check if the directory exists
-#RUN ls -l /  
 
 # Use NGINX to serve the Angular app (ARM architecture version)
 FROM arm64v8/nginx:alpine
 
 # Copy the built Angular app to the NGINX web directory
 #COPY --from=0 /app/dist/CyberpunkGame/ /usr/share/nginx/html
-COPY --from=build /usr/local/app/dist/CyberpunkGame /usr/share/nginx/html
+COPY --from=0 /app/dist/CyberpunkGame /usr/share/nginx/html
 
 # Expose the port the app will run on
 EXPOSE 80

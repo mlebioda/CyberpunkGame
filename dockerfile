@@ -9,7 +9,7 @@ WORKDIR /app
 COPY package*.json ./
 # Install dependencies
 RUN npm install
-RUN npx ngcc --properties es2023 browser module main --first-only --create-invy-entry-points
+#RUN npx ngcc --properties es2023 browser module main --first-only --create-invy-entry-points
 # Copy the rest of the application code
 COPY . .
 # Generate the build of the application

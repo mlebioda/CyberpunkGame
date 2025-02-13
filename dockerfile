@@ -36,4 +36,4 @@ COPY --from=0 /app/dist/CyberpunkGame /usr/share/nginx/html
 EXPOSE 80
 
 # Start NGINX
-CMD ["nginx", "-g", "daemon off;"]
+#CMD ["nginx", "-g", "daemon off;"]

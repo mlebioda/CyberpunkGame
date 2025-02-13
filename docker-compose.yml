@@ -1,0 +1,16 @@
+services:
+  cyberpunkgame:
+    container_name: cyberpunkgamecontainer
+    build: .
+    image: mlebioda/cyberpunk-game
+    platform: linux/arm64
+    ports:
+      - 8080:80
+    expose:
+      - 80
+    networks:
+      - internalnet
+
+networks:
+  internalnet:  # Declare this as an external network
+    driver: bridge

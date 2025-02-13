@@ -21,7 +21,7 @@ FROM arm64v8/nginx:alpine
 
 # Copy the built Angular app to the NGINX web directory
 #COPY --from=0 /app/dist/CyberpunkGame/ /usr/share/nginx/html
-COPY --from=build /app/dist/cyberpunkgame/ /usr/share/nginx/html
+COPY --from=build /app/dist/CyberpunkGame/ /usr/share/nginx/html
 # Expose the port the app will run on
 EXPOSE 80
 

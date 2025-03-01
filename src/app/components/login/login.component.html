@@ -1,0 +1,17 @@
+<main class="main">
+    <div class="content">
+      <div class="left-side">
+        <button (click)="createSessionClickHandler($event)">Create a new session</button>
+        <div class="session-container">
+          <p>Join to session</p>
+          Session number
+          <input type="number" name="session-number">
+          Session password
+          <input type="password" name="session-password">
+          <button (click)="joinSessionClickHandler($event)">Join</button>
+        </div>
+      </div>
+      <div class="right-side">
+      </div>
+    </div>
+  </main>

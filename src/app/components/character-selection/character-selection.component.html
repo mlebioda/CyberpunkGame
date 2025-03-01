@@ -1,0 +1,23 @@
+<div class="options-container cyberpunk-theme">
+  <div *ngFor="let option of options" class="option cyberpunk-option">
+    <button (click)="selectOption(option.id)" 
+            [class.selected]="option.id === selectedOptionId" class="cyberpunk-button">
+      {{ option.name }}
+    </button>
+    <button class="toggle cyberpunk-toggle" (click)="toggleDescription(option)">⬇️</button>
+
+    <div *ngIf="option.expanded" class="description-container cyberpunk-description-container">
+      <div class="option-image cyberpunk-option-image">
+        <img [src]="option.image" alt="{{ option.name }}">
+      </div>
+
+      <div class="description-text cyberpunk-description-text">
+        <p class="short-description cyberpunk-short-description">{{ option.shortDescription }}</p>
+        <p class="description cyberpunk-description">{{ option.description }}</p>
+        <button (click)="toggleDescription(option)" class="close-btn cyberpunk-close-btn">Fold</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<button (click)="confirmSelection()" class="confirm-btn cyberpunk-confirm-btn">Potwierdź wybór</button>

@@ -11,6 +11,25 @@ services:
     networks:
       - internalnet
 
+#  nginx:
+#    image: arm64v8/nginx
+#    container_name: nginx
+#    ports:
+#      - "8080:80"
+#    volumes:
+#      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+#    networks:
+#      - cyberpunkgame_mynetwork
+#    restart: always
+
+
+    #networks:
+    #  - cyberpunkgame_mynetwork
+
+#networks:
+ # mynetwork:
+  #  driver: bridge
 networks:
   internalnet:  # Declare this as an external network
     driver: bridge
+    #external: true

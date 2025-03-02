@@ -1,0 +1,8 @@
+rebuild image:
+docker-compose up --build -d
+
+backup
+docker exec -t my_postgres pg_dump -U myuser mydatabase > backup.sql
+
+restore backup
+cat backup.sql | docker exec -i my_postgres psql -U myuser -d mydatabase
